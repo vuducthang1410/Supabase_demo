@@ -12,10 +12,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Supabase CLI
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Supabase CLI via npm
         run: |
-          curl -fsSL https://get.supabase.com/install | sh
-          echo "$HOME/.supabase/bin" >> $GITHUB_PATH
+          npm install -g supabase
           supabase --version
 
       - name: Unlink existing Supabase project (if linked incorrectly)
