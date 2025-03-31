@@ -28,3 +28,6 @@ jobs:
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: supabase db push
+      - name: Debug ENV Variables
+        run: echo "SUPABASE_DB_URL=${{ secrets.SUPABASE_DB_URL }}"
+
