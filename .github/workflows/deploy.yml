@@ -14,21 +14,19 @@ jobs:
 
       - name: Install Supabase CLI
         run: |
-          curl -fsSL https://deb.nodesource.com/setup_16.x | bash -  # Cần NodeJS
-          sudo apt-get install -y nodejs
-          npm install -g supabase
+          curl -fsSL https://github.com/supabase/cli/releases/latest/download/supabase_linux_amd64.tar.gz -o supabase.tar.gz
+          tar -xvzf supabase.tar.gz -C /usr/local/bin
+          rm supabase.tar.gz
           supabase --version
 
       - name: Link to Supabase Cloud
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
         run: supabase link --project-ref wxibsezkqqbfflonpjbm
-
       - name: Debug ENV Variables
-        run: |
-          echo "SUPABASE_DB_URL=${{ secrets.SUPABASE_DB_URL }}" | sed 's/password=.*@/password=*****@/g'
-
+        run: echo "SUPABASE_DB_URL=${{ secrets.SUPABASE_DB_URL }}"
       - name: Deploy database
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: supabase db push --debug
+      
