@@ -12,11 +12,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Supabase CLI manually
+      - name: Install Supabase CLI via npm
         run: |
-          curl -fsSL https://github.com/supabase/cli/releases/latest/download/supabase-linux-amd64 -o supabase
-          chmod +x supabase
-          sudo mv supabase /usr/local/bin/
+          npm install -g supabase
           supabase --version
 
       - name: Unlink existing Supabase project (if linked incorrectly)
