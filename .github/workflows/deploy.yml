@@ -25,4 +25,6 @@ jobs:
         run: supabase link --project-ref wxibsezkqqbfflonpjbm
 
       - name: Deploy database
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: supabase db push
