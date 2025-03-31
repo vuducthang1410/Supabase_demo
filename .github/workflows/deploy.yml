@@ -12,10 +12,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Supabase CLI via npm
-        run: |
-          npm install -g supabase
-          supabase --version
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install Supabase CLI using pnpm
+        run: pnpm add -g supabase
+
+      - name: Check Supabase CLI version
+        run: supabase --version
 
       - name: Unlink existing Supabase project (if linked incorrectly)
         continue-on-error: true
