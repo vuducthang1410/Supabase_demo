@@ -23,10 +23,17 @@ jobs:
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
         run: supabase link --project-ref wxibsezkqqbfflonpjbm
+
       - name: Debug ENV Variables
         run: echo "SUPABASE_DB_URL=${{ secrets.SUPABASE_DB_URL }}"
+
+      - name: Set Up Database URL
+        run: |
+          echo "DATABASE_URL=${{ secrets.SUPABASE_DB_URL }}" >> $GITHUB_ENV
+          # Debugging: Output the connection string
+          echo "Database URL: $DATABASE_URL"
+        
       - name: Deploy database
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
         run: supabase db push --debug
-      
