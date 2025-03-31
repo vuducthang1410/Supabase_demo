@@ -20,20 +20,15 @@ jobs:
           supabase --version
 
       - name: Link to Supabase Cloud
-        env:
-          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
         run: supabase link --project-ref wxibsezkqqbfflonpjbm
 
-      - name: Debug ENV Variables
-        run: echo "SUPABASE_DB_URL=${{ secrets.SUPABASE_DB_URL }}"
-
-      - name: Set up DB URL
+      - name: Set up DB URL directly
         run: |
-          echo "SUPABASE_DB_URL=postgres://${{ secrets.DB_USER }}:${{ secrets.DB_PASS }}@${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }}/${{ secrets.DB_NAME }}?sslmode=require" >> $GITHUB_ENV
-          # Debugging: Output the connection string (optional)
-          echo "Database URL: $SUPABASE_DB_URL"
+          # Set your database URL directly here
+          export SUPABASE_DB_URL="postgres://postgres.wxibsezkqqbfflonpjbm:123xxThang@gmail@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?sslmode=require"
+          echo "Using DB URL: $SUPABASE_DB_URL"
 
       - name: Deploy database
-        env:
-          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
-        run: supabase db push --debug
+        run: |
+          # Deploy database using the direct DB URL
+          supabase db push --url $SUPABASE_DB_URL --debug
