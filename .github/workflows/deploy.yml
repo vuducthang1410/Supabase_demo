@@ -27,12 +27,12 @@ jobs:
       - name: Debug ENV Variables
         run: echo "SUPABASE_DB_URL=${{ secrets.SUPABASE_DB_URL }}"
 
-      - name: Set Up Database URL
+      - name: Set up DB URL
         run: |
-          echo "DATABASE_URL=${{ secrets.SUPABASE_DB_URL }}" >> $GITHUB_ENV
-          # Debugging: Output the connection string
-          echo "Database URL: $DATABASE_URL"
-        
+          echo "SUPABASE_DB_URL=postgres://${{ secrets.DB_USER }}:${{ secrets.DB_PASS }}@${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }}/${{ secrets.DB_NAME }}?sslmode=require" >> $GITHUB_ENV
+          # Debugging: Output the connection string (optional)
+          echo "Database URL: $SUPABASE_DB_URL"
+
       - name: Deploy database
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
