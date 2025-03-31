@@ -12,25 +12,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install pnpm
-        run: npm install -g pnpm
-
-      - name: Setup pnpm global bin directory
+      - name: Install Supabase CLI
         run: |
-          export SHELL=/bin/bash  # ✅ Fix lỗi SHELL
-          pnpm setup
-          echo "PNPM_HOME=$HOME/.local/share/pnpm" >> $GITHUB_ENV
-          echo "$HOME/.local/share/pnpm" >> $GITHUB_PATH
-
-      - name: Install Supabase CLI using pnpm
-        run: pnpm add -g supabase
-
-      - name: Verify Supabase CLI installation
-        run: supabase --version
-
-      - name: Unlink existing Supabase project (if linked incorrectly)
-        continue-on-error: true
-        run: supabase unlink
+          curl -fsSL https://github.com/supabase/cli/releases/latest/download/supabase-linux-amd64 -o supabase
+          chmod +x supabase
+          sudo mv supabase /usr/local/bin/
+          supabase --version
 
       - name: Link to Supabase Cloud
         env:
