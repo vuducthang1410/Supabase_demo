@@ -15,20 +15,26 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
 
+      - name: Setup pnpm global bin directory
+        run: pnpm setup
+
+      - name: Add pnpm to PATH
+        run: echo 'export PATH="$PNPM_HOME:$PATH"' >> $GITHUB_ENV
+
       - name: Install Supabase CLI using pnpm
-        run: pnpm add -g supabase
+        run: pnpm add supabase --save-dev
 
       - name: Check Supabase CLI version
-        run: supabase --version
+        run: npx supabase --version
 
       - name: Unlink existing Supabase project (if linked incorrectly)
         continue-on-error: true
-        run: supabase unlink
+        run: npx supabase unlink
 
       - name: Link to Supabase Cloud
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-        run: supabase link --project-ref wxibsezkqqbfflonpjbm
+        run: npx supabase link --project-ref wxibsezkqqbfflonpjbm
 
       - name: Deploy database
-        run: supabase db push
+        run: npx supabase db push
