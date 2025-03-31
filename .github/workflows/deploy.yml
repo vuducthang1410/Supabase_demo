@@ -24,13 +24,7 @@ jobs:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
         run: supabase link --project-ref wxibsezkqqbfflonpjbm
 
-      - name: Set up DB URL directly
-        run: |
-          # Set your database URL directly here, making sure it is properly encoded
-          export SUPABASE_DB_URL="postgres://postgres.wxibsezkqqbfflonpjbm:123xxThang%40gmail.com@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?sslmode=require"
-          echo "Using DB URL: $SUPABASE_DB_URL"
-
       - name: Deploy database
         run: |
-          # Deploy database using the direct DB URL
-          supabase db push --db-url $SUPABASE_DB_URL
+          # Set the connection string directly here
+          supabase db push --db-url "postgres://postgres.wxibsezkqqbfflonpjbm:123xxThang@gmail@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?sslmode=require"
