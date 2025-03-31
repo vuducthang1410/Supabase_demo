@@ -14,9 +14,13 @@ jobs:
 
       - name: Install Supabase CLI
         run: |
-          curl -fsSL https://supabase.io/install.sh | sh
-          export PATH=$HOME/.supabase/bin:$PATH
+          curl -fsSL https://deb.supabase.com/install.sh | sh
+          echo "$HOME/.supabase/bin" >> $GITHUB_PATH
           supabase --version
+
+      - name: Unlink existing Supabase project (if linked incorrectly)
+        continue-on-error: true
+        run: supabase unlink
 
       - name: Link to Supabase Cloud
         env:
