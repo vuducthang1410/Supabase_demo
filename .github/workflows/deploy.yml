@@ -14,7 +14,7 @@ jobs:
 
       - name: Install Supabase CLI
         run: |
-          curl -fsSL https://deb.supabase.com/install.sh | sh
+          curl -fsSL https://get.supabase.com/install | sh
           echo "$HOME/.supabase/bin" >> $GITHUB_PATH
           supabase --version
 
