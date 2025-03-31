@@ -19,24 +19,23 @@ jobs:
         run: |
           export SHELL=/bin/bash  # ✅ Fix lỗi SHELL
           pnpm setup
-
-      - name: Add pnpm to PATH
-        run: echo 'export PATH="$PNPM_HOME:$PATH"' >> $GITHUB_ENV
+          echo "PNPM_HOME=$HOME/.local/share/pnpm" >> $GITHUB_ENV
+          echo "$HOME/.local/share/pnpm" >> $GITHUB_PATH
 
       - name: Install Supabase CLI using pnpm
-        run: pnpm add supabase --save-dev
+        run: pnpm add -g supabase
 
-      - name: Check Supabase CLI version
-        run: npx supabase --version
+      - name: Verify Supabase CLI installation
+        run: supabase --version
 
       - name: Unlink existing Supabase project (if linked incorrectly)
         continue-on-error: true
-        run: npx supabase unlink
+        run: supabase unlink
 
       - name: Link to Supabase Cloud
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-        run: npx supabase link --project-ref wxibsezkqqbfflonpjbm
+        run: supabase link --project-ref wxibsezkqqbfflonpjbm
 
       - name: Deploy database
-        run: npx supabase db push
+        run: supabase db push
