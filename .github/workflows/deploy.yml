@@ -33,4 +33,4 @@ jobs:
       - name: Deploy database
         run: |
           # Deploy database using the direct DB URL
-          supabase db push --url $SUPABASE_DB_URL --debug
+          supabase db push --db-url $SUPABASE_DB_URL --debug
