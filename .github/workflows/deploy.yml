@@ -16,7 +16,9 @@ jobs:
         run: npm install -g pnpm
 
       - name: Setup pnpm global bin directory
-        run: pnpm setup
+        run: |
+          export SHELL=/bin/bash  # ✅ Fix lỗi SHELL
+          pnpm setup
 
       - name: Add pnpm to PATH
         run: echo 'export PATH="$PNPM_HOME:$PATH"' >> $GITHUB_ENV
